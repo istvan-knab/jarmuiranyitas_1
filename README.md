@@ -1,1 +1,1 @@
-# jarmuiranyitas_1
+# Járműirányítás 1.
