@@ -19,6 +19,7 @@ class Agent(ABC):
         reset(self) -> numpy.ndarray
         fit(self) -> None
         inference(self, state: np.ndarray) -> np.ndarray
+        seed(self, seed) -> None
     """
     @abstractmethod
     def __init__(self,
