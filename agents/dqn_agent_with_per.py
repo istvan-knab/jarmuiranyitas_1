@@ -8,8 +8,8 @@ import torch.optim as optimizer
 
 from jarmuiranyitas_1.agents.agent import Agent
 from jarmuiranyitas_1.agents.misc.per_memory import PERMemory
-from jarmuiranyitas_1.agents.misc.er_memory import ERMemory
-from jarmuiranyitas_1.agents.misc.e_greedy import EGreedy
+from jarmuiranyitas_1.agents.misc.r_memory import RMemory
+from jarmuiranyitas_1.agents.misc.epsilon_greedy import EGreedy
 from jarmuiranyitas_1.agents.misc.neural_network import NNInitializer
 
 
@@ -35,7 +35,7 @@ class DQNAgentWithPER(Agent):
         if per:
             self.memory = PERMemory(memory_size, memory_alpha, memory_beta, memory_beta_increment, memory_epsilon)
         else:
-            self.memory = ERMemory(memory_size)
+            self.memory = RMemory(memory_size)
         self.action_network = NNInitializer(network_type, network_size)
         self.target_network = NNInitializer(network_type, network_size)
         self.e_greedy = EGreedy(epsilon_start, epsilon_decay, self.action_network)
