@@ -1,22 +1,22 @@
 import scipy
 import numpy as np
+from abc import ABC, abstractmethod
 
 
-class MapLoader:
-
-    def __init__(self, file_name: str) -> None:
+class MapLoader(ABC):
+    @abstractmethod
+    def load(self, file_name) -> np.ndarray:
         """
 
         :param file_name:
-        """
-        self._file_name = file_name
-
-    def load(self) -> np.ndarray:
-        """
-
         :return:
         """
-        map_data = scipy.io.loadmat("maps/" + self._file_name + '.mat')
+        pass
+
+
+class MatlabMapLoader(MapLoader):
+    def load(self, file_name) -> np.ndarray:
+        map_data = scipy.io.loadmat("maps/" + file_name + '.mat')
         map_data = map_data['xyz']
         map_data = np.delete(map_data, 2, 1)
 
