@@ -19,6 +19,7 @@ class Agent(ABC):
         reset(self) -> numpy.ndarray
         fit(self) -> None
         inference(self, state: np.ndarray) -> np.ndarray
+        seed(self, seed) -> None
     """
     @abstractmethod
     def __init__(self,
@@ -55,9 +56,10 @@ class Agent(ABC):
         pass
 
     @abstractmethod
-    def seed(self) -> None:
+    def seed(self, seed) -> None:
         """
         This function seeds the agent and all its dependencies.
+        :param seed: int value for seeding the agent
         :return: None
         """
         pass
