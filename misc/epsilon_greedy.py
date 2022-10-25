@@ -1,10 +1,12 @@
 import numpy as np
+import torch
+
 
 class EGreedy:
     """
     This class is responsible for choosing between exploring or exploiting
     """
-    def __init__(self,epsilon_start:float, epsilon_decay:float)->None:
+    def __init__(self, epsilon_start : float, epsilon_decay : float)->None:
         """
         The initial parameters of the discount
         :param epsilon_start: starting value of epsilon
@@ -15,16 +17,14 @@ class EGreedy:
         self.current_epsilon = self.epsilon_start
         self.action_type = str()
 
-
-    def calculate_epsilon_decay(self)->float:
+    def calculate_epsilon_decay(self)->None:
         """
         To compare exponential discount of epsilon value
         :return: None
         """
         self.current_epsilon = self.current_epsilon * self.epsilon_decay
 
-
-    def generate_reference_value(self)->float:
+    def generate_reference_value(self)->None:
         """
         By choosing an action there is a value to compare with epsilon between 0 and 1 random choosen in the
         domain 0-1 .
@@ -32,8 +32,7 @@ class EGreedy:
         """
         self.reference_value = np.random()
 
-
-    def choose_action_type(self)->str:
+    def choose_action_type(self)->None:
         """
         By comparsion of the two float values between 0 and 1 we can get the type of the action . By discounting
         epsilon we will get initially more exploring actions , in the end after several time steps by low epsilon
@@ -43,7 +42,7 @@ class EGreedy:
         self.generate_reference_value()
         self.current_epsilon()
 
-        if self.reference_value > self.current_epsilon :
+        if self.reference_value > self.current_epsilon:
             self.action_type = "exploit"
         else:
             self.action_type = "explore"
