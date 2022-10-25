@@ -35,7 +35,7 @@ class DQNAgentWithPER(Agent):
         self.discount_factor = discount_factor
         self.batch_size = batch_size
         self.memory = PERMemory(memory_size, memory_alpha, memory_beta, memory_beta_increment, memory_epsilon)
-        self.e_greedy = EGreedy(epsilon_start, epsilon_decay)
+        self.e_greedy = EGreedy(epsilon_start, epsilon_decay )
         self.action_network = NNInitializer(network_type, network_size)
         self.target_network = NNInitializer(network_type, network_size)
         self.seed = seed
