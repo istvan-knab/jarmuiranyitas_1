@@ -50,11 +50,16 @@ class EGreedy:
 
 
     def choosing_action(self):
-
+        """
+        The choosing of the action of the time step
+        :return: action(type not defined yet)
+        """
         self.choose_action_type()
         if self.action_type == "exploit":
+            #argmax
             pass
         elif self.action_type == "explore":
+            #random
             pass
         else:
             #default case
