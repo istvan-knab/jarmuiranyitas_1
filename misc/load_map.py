@@ -20,7 +20,4 @@ class MatlabMapLoader(MapLoader):
         map_data = map_data['xyz']
         map_data = np.delete(map_data, (2, 3), 1)
 
-        return map_data
-
-
-
+        return
