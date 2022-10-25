@@ -38,7 +38,7 @@ class DQNAgentWithPER(Agent):
             self.memory = RMemory(memory_size)
         self.action_network = NNInitializer(network_type, network_size)
         self.target_network = NNInitializer(network_type, network_size)
-        self.e_greedy = EGreedy(epsilon_start, epsilon_decay, self.action_network)
+        self.e_greedy = EGreedy(epsilon_start, epsilon_decay)
         self.seed = seed
 
     def seed(self, seed) -> None:
