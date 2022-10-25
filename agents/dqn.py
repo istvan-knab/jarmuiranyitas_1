@@ -11,6 +11,7 @@ from jarmuiranyitas_1.agents.agent import Agent
 from jarmuiranyitas_1.agents.misc.per_memory import PERMemory
 from jarmuiranyitas_1.agents.misc.epsilon_greedy import EGreedy
 from jarmuiranyitas_1.agents.misc.per_memory import NNInitializer
+from jarmuiranyitas_1.agents.misc.r_memory import RMemory
 
 torch.manual_seed(0)
 random.seed(0)
