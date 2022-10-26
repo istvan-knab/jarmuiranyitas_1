@@ -1,8 +1,8 @@
 import random
 from collections import deque
+from jarmuiranyitas_1.agents.misc.memory import
 
-
-class RMemory(object):
+class RMemory():
     """
     This class is responsible for storing the experiments batched in a tuple
     The deque represents the memory , with 2 dimensional list
