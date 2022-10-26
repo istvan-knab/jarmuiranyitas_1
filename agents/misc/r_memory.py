@@ -1,8 +1,9 @@
 import random
+import numpy as np
 from collections import deque
-from jarmuiranyitas_1.agents.misc.memory import
+from jarmuiranyitas_1.agents.misc.memory import Memory
 
-class RMemory():
+class RMemory(Memory):
     """
     This class is responsible for storing the experiments batched in a tuple
     The deque represents the memory , with 2 dimensional list
@@ -13,23 +14,26 @@ class RMemory():
     done : bool
     """
 
-    def __init__(self, BUFFER_SIZE):
-
-        self.memory = deque([[],[],[],[],[]], maxlen=BUFFER_SIZE)
-
-    def push(self):
+    def __init__(self, size: int) -> None:
         """
-        Save a transition
-        :return:
+
+        :param size: size of the memory buffer
+        :return: None
         """
-        #define tuple outside
         pass
 
-    def sample(self, batch_size):
+    def save(self, experience: np.ndarray) -> None:
         """
-        RAndom sample for optimization
-        :param batch_size: integer
-        :return: sample
+
+        :param experience:
+        :return: None
         """
-        return random.sample(self.memory, batch_size)
+        pass
+
+    def sample(self):
+        """
+
+        :return: sampled experience
+        """
+        pass
 
