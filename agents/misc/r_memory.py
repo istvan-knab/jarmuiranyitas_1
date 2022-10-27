@@ -30,8 +30,8 @@ class RMemory(Memory):
     def save(self, *args: tuple) -> None:
         """
 
-        :param experience:a named tuple which stores the states, action and reward , done
-        foc comparsion and optimization
+        param experience:a named tuple which stores the states, action and reward , done
+        foc comparison and optimization
         :return: None
         """
         self.memory.append(Experiences(*args))
@@ -39,7 +39,6 @@ class RMemory(Memory):
     def sample(self, batch_size) -> tuple:
         """
         Select random lines of the sample batch , in size of batch
-        :return: the reduced strucure in range of batch
+        :return: the reduced structure in range of batch
         """
         return random.sample(self.memory, batch_size)
-
