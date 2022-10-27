@@ -1,7 +1,10 @@
 import random
 import numpy as np
-from collections import deque
 from jarmuiranyitas_1.agents.misc.memory import Memory
+from collections import namedtuple, deque
+
+Experiences = namedtuple('Experiences', ('state', 'action', 'next_state', 'reward', 'done'))
+
 
 class RMemory(Memory):
     """
@@ -16,24 +19,27 @@ class RMemory(Memory):
 
     def __init__(self, size: int) -> None:
         """
-
+        Initializing the size of memory
         :param size: size of the memory buffer
         :return: None
         """
+        self.capacity = size
+        self.memory = deque([], maxlen=self.capacity)
         pass
 
-    def save(self, experience: np.ndarray) -> None:
+    def save(self, *args: tuple) -> None:
         """
 
-        :param experience:
+        :param experience:a named tuple which stores the states, action and reward , done
+        foc comparsion and optimization
         :return: None
         """
-        pass
+        self.memory.append(Experiences(*args))
 
-    def sample(self):
+    def sample(self, batch_size) -> tuple:
         """
-
-        :return: sampled experience
+        Select random lines of the sample batch , in size of batch
+        :return: the reduced strucure in range of batch
         """
-        pass
+        return random.sample(self.memory, batch_size)
 
