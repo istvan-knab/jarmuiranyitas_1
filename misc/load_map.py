@@ -1,6 +1,7 @@
-import scipy
+from scipy.io import loadmat
 import numpy as np
 from abc import ABC, abstractmethod
+import matplotlib.pyplot as plt
 
 
 class MapLoader(ABC):
