@@ -21,4 +21,44 @@ class MatlabMapLoader(MapLoader):
         map_data = map_data['xyz']
         map_data = np.delete(map_data, (2, 3), 1)
 
-        return
+        return map_data
+
+
+def make_offset_polygon(old_x, old_y, offset, outer_ccw=1):
+    num_points = len(old_x)
+    new_x = []
+    new_y = []
+
+    for curr in range(num_points):
+        prev_point = (curr + num_points - 1) % num_points
+        next_point = (curr + 1) % num_points
+
+        vn_x = old_x[next_point] - old_x[curr]
+        vn_y = old_y[next_point] - old_y[curr]
+
+        norm = np.sqrt(vn_x**2+vn_y**2)
+        vnn_x = vn_x / norm
+        vnn_y = vn_y / norm
+        nnn_x = vnn_y
+        nnn_y = -vnn_x
+
+        vp_x = old_x[curr] - old_x[prev_point]
+        vp_y = old_y[curr] - old_y[prev_point]
+        norm = np.sqrt(vp_x ** 2 + vp_y ** 2)
+        vpn_x = vp_x / norm
+        vpn_y = vp_y / norm
+        npn_x = vpn_y * outer_ccw
+        npn_y = -vpn_x * outer_ccw
+
+        bis_x = (nnn_x + npn_x) * outer_ccw
+        bis_y = (nnn_y + npn_y) * outer_ccw
+
+        norm = np.sqrt(bis_x ** 2 + bis_y ** 2)
+        bisn_x = bis_x / norm
+        bisn_y = bis_y / norm
+        bislen = offset / np.sqrt((1 + nnn_x*npn_x + nnn_y*npn_y)/2)
+
+        new_x.append(old_x[curr] + bislen * bisn_x)
+        new_y.append(old_y[curr] + bislen * bisn_y)
+
+    return new_x, new_y
