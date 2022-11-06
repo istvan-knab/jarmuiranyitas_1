@@ -24,7 +24,7 @@ def main():
     arg_parser.add_argument("--map_ext", default=MAP_EXT, type=str)
     args = arg_parser.parse_args()
 
-    env_initializer = EnvironmentInitializer(args.seed, args.map_name)
+    env_initializer = EnvironmentInitializer(args.seed, args.map_name, args.map_ext)
     agent_initializer = AgentInitializer(args.seed, args.agent)
     trainer = Trainer(args.training_name, env_initializer.env, agent_initializer.agent, args.max_episodes)
 
