@@ -6,12 +6,13 @@ from jarmuiranyitas_1.experiments.environment_initializer import EnvironmentInit
 
 
 # Defaults
-SEED = None
+SEED = 0
 MAP_NAME = 'xyz_palya'
 TRAINING_NAME = 'Training_results_' + MAP_NAME + '_' + str(SEED)
 AGENT = 'dqn'
 MAX_EPISODES = 1e6
 MAP_EXT = '.png'
+ENV_NAME = 'f110'
 
 
 def main():
@@ -22,6 +23,7 @@ def main():
     arg_parser.add_argument("--agent", default=AGENT, type=str)
     arg_parser.add_argument("--max_episodes", default=MAX_EPISODES, type=int)
     arg_parser.add_argument("--map_ext", default=MAP_EXT, type=str)
+    arg_parser.add_argument("--env_name", default=ENV_NAME, type=str)
     args = arg_parser.parse_args()
 
     env_initializer = EnvironmentInitializer(args.seed, args.map_name, args.map_ext)
