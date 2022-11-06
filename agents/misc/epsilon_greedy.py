@@ -1,12 +1,11 @@
 import numpy as np
-import torch
 
 
 class EGreedy:
     """
     This class is responsible for choosing between exploring or exploiting
     """
-    def __init__(self, epsilon_start : float, epsilon_decay : float)->None:
+    def __init__(self, epsilon_start: float, epsilon_decay: float, seed: int, output_dim) -> None:
         """
         The initial parameters of the discount
         :param epsilon_start: starting value of epsilon
