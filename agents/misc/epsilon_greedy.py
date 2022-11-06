@@ -1,19 +1,29 @@
 import numpy as np
-import torch
 
 
 class EGreedy:
     """
     This class is responsible for choosing between exploring or exploiting
     """
+
+    def __init__(self, epsilon_start: float, epsilon_decay: float, seed: int, output_dim) -> None:
+=======
     def __init__(self, epsilon_start: float, epsilon_decay: float) -> None:
+
         """
         The initial parameters of the discount
         :param epsilon_start: starting value of epsilon
         :param epsilon_decay: Discount factor of the value decent
         """
-        self.epsilon_start = epsilon_start
+        self.current_epsilon = epsilon_start
         self.epsilon_decay = epsilon_decay
+
+        self.output_dim = output_dim
+
+        self.seed(seed)
+
+    def choose_action(self):
+=======
         self.current_epsilon = self.epsilon_start
         self.action_type = str()
 
@@ -48,19 +58,19 @@ class EGreedy:
             self.action_type = "explore"
 
     def choosing_action(self):
+
         """
         The choosing of the action of the time step
         :return: action(type not defined yet)
         """
-        self.choose_action_type()
-        if self.action_type == "exploit":
-            #argmax
-            pass
-        elif self.action_type == "explore":
-            #random
-            pass
-        else:
-            #default case
-            pass
+        action = None
+        if np.random.random() <= self.current_epsilon:
+            action = np.random.randint(0, self.output_dim)
 
-        #TODO:return parameter with the action value(not defined yet)
+        self.current_epsilon = self.current_epsilon * self.epsilon_decay
+
+        return action
+
+    @staticmethod
+    def seed(seed) -> None:
+        np.random.seed(seed)
