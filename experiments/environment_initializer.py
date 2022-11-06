@@ -7,7 +7,7 @@ class EnvironmentInitializer:
     def __init__(self, seed, map_name, map_ext):
         self._env = None
 
-        self.create_env()
+        self._create_env(seed, map_name, map_ext)
 
     @property
     def env(self):
