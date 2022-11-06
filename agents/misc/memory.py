@@ -50,3 +50,12 @@ class Memory(ABC):
         :return: sampled experience
         """
         pass
+
+    @abstractmethod
+    def seed(self, seed) -> None:
+        """
+
+        :param seed:
+        :return:
+        """
+        pass
