@@ -4,16 +4,26 @@ import os
 
 class EnvironmentInitializer:
 
-    def __init__(self, seed, map_name, map_ext):
+    def __init__(self, env_name, **kwargs):
         self._env = None
 
-        self._create_env(seed, map_name, map_ext)
+        if env_name == 'f110':
+            self._create_env = self._create_env_f110
+        else:
+            raise NotImplementedError
+
+        self._create_env(**kwargs)
 
     @property
     def env(self):
         return self._env
 
-    def _create_env(self, seed, map_name, map_ext):
+    @abstractmethod
+    def _create_env_abstract(self, **kwargs):
+        pass
+
+    def _create_env_f110(self, **kwargs):
         path = os.path.abspath("../misc/maps")
-        path = ''.join([path, "/", map_name])
-        self._env = gym.make('f110_gym:f110-v0', seed=seed, map=path, map_ext=map_ext, num_agents=1)
+        path = ''.join([path, "/", kwargs["map_name"]])
+        self._env = gym.make('f110_gym:f110-v0', seed=kwargs["seed"], map=path, map_ext=kwargs["map_ext"],
+                             num_agents=1, timestep=0.01)
