@@ -26,7 +26,7 @@ def main():
 
     env_initializer = EnvironmentInitializer(args.seed, args.map_name, args.map_ext)
     agent_initializer = AgentInitializer(args.seed, args.agent)
-    trainer = Trainer(args.training_name, env_initializer.env, agent_initializer.agent, args.max_episodes)
+    trainer = Trainer(env_initializer.env, agent_initializer.agent, args.max_episodes, args.training_name)
 
     trainer.train()
 
