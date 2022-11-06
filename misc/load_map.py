@@ -62,3 +62,24 @@ def make_offset_polygon(old_x, old_y, offset, outer_ccw=1):
         new_y.append(old_y[curr] + bislen * bisn_y)
 
     return new_x, new_y
+
+
+def main():
+    matlab_map_loader = MatlabMapLoader()
+    map_data = matlab_map_loader.load('xyz_palya')
+
+    x_centerline = np.reshape(map_data[:, 0], (-1, 1))
+    y_centerline = np.reshape(map_data[:, 1], (-1, 1))
+
+    plt.figure()
+    x_inner_boundary, y_inner_boundary = make_offset_polygon(x_centerline, y_centerline, 0.5, 1)
+    plt.plot(x_inner_boundary, y_inner_boundary, "-k")
+    x_outer_boundary, y_outer_boundary = make_offset_polygon(x_centerline, y_centerline, -0.5, 1)
+    plt.plot(x_outer_boundary, y_outer_boundary, "-k")
+    plt.axis('off')
+    plt.savefig('xyz_palya.png', dpi=600, bbox_inches="tight")
+    plt.show()
+
+
+if __name__ == "__main__":
+    main()
