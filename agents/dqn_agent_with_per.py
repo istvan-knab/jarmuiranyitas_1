@@ -20,7 +20,7 @@ class DQNAgentWithPER(Agent):
                  discount_factor: float = 0.99,
                  batch_size: int = 128,
                  network_size: list = None,
-                 network_type: str = "cnn",
+                 network_type: str = "mlp",
                  seed: int = 0,
                  epsilon_start: float = 1,
                  epsilon_decay: float = 0.99,
@@ -29,8 +29,9 @@ class DQNAgentWithPER(Agent):
                  memory_beta: float = 0.4,
                  memory_beta_increment: float = 0.0005,
                  memory_epsilon: float = 0.01,
-                 per: bool = False) -> None:
-        self.learning_rate = learning_rate
+                 per: bool = False,
+                 ) -> None:
+
         self.discount_factor = discount_factor
         self.batch_size = batch_size
         if per:
