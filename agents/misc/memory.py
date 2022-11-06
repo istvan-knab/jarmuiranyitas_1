@@ -27,16 +27,24 @@ class Memory(ABC):
         pass
 
     @abstractmethod
-    def save(self, experience: np.ndarray) -> None:
+    def __len__(self) -> int:
         """
 
-        :param experience:
         :return: None
         """
         pass
 
     @abstractmethod
-    def sample(self):
+    def save(self, **kwargs) -> None:
+        """
+
+        :param kwargs:
+        :return:
+        """
+        pass
+
+    @abstractmethod
+    def sample(self, size: int) -> list:
         """
 
         :return: sampled experience
