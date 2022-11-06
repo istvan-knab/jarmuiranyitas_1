@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-import numpy as np
+from collections import namedtuple
 
 
 class Memory(ABC):
@@ -14,28 +14,48 @@ class Memory(ABC):
         save(self, experience: np.ndarray) -> None
         sample(self)
     """
+    MEMORY_ITEM = namedtuple('Transition', ('state', 'action', 'next_state', 'reward', 'done'))
+
     @abstractmethod
-    def __init__(self, size: int) -> None:
+    def __init__(self, size: int, seed: int) -> None:
         """
 
         :param size: size of the memory buffer
+        :param seed:
         :return: None
         """
         pass
 
     @abstractmethod
-    def save(self, experience: np.ndarray) -> None:
+    def __len__(self) -> int:
         """
 
-        :param experience:
         :return: None
         """
         pass
 
     @abstractmethod
-    def sample(self):
+    def save(self, **kwargs) -> None:
+        """
+
+        :param kwargs:
+        :return:
+        """
+        pass
+
+    @abstractmethod
+    def sample(self, size: int) -> list:
         """
 
         :return: sampled experience
+        """
+        pass
+
+    @abstractmethod
+    def seed(self, seed) -> None:
+        """
+
+        :param seed:
+        :return:
         """
         pass

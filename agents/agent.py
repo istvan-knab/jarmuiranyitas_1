@@ -63,3 +63,12 @@ class Agent(ABC):
         :return: None
         """
         pass
+
+    @abstractmethod
+    def save_experience(self, **kwargs):
+        """
+
+        :param kwargs:
+        :return:
+        """
+        pass

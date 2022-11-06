@@ -25,13 +25,13 @@ class AgentInitializer:
     """
     def __init__(self, seed, agent_type):
         self._agent = None
+
         self._config = None
         self._agent_type = agent_type
+        self._seed = seed
 
         self._load_agent_config()
-        self._choose_agent()
-
-        self._seed = self._config.seed if seed is None else seed
+        self._create_agent()
 
     @property
     def agent(self):
@@ -46,12 +46,12 @@ class AgentInitializer:
             conf_dict = yaml.load(file, Loader=yaml.FullLoader)
         self._config = Namespace(**conf_dict)
 
-    def _choose_agent(self) -> None:
+    def _create_agent(self) -> None:
         """
 
         :return: None
         """
-        if self._agent == 'dqn':
+        if self._agent_type == 'dqn':
             self._agent = DQNAgentWithPER(self._config.dqn_learning_rate,
                                           self._config.dqn_discount_factor,
                                           self._config.dqn_batch_size,
