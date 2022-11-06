@@ -34,14 +34,22 @@ class DQNAgentWithPER(Agent):
 
         self.discount_factor = discount_factor
         self.batch_size = batch_size
+
+        nn_initializer = NNInitializer(network_type, network_size, seed)
+        self.action_network = nn_initializer.generate_nn()
+        self.target_network = nn_initializer.generate_nn()
+        self.update_networks()
+
+        self.optimizer = optimizer.Adam(self.action_network.parameters(), lr=learning_rate)
+        self.criterion = nn.MSELoss()
+        self.summary_writer = SummaryWriter(log_dir="../experiments/logs")
+        self.e_greedy = EGreedy(epsilon_start, epsilon_decay, seed, network_size[-1])
         if per:
-            self.memory = PERMemory(memory_size, memory_alpha, memory_beta, memory_beta_increment, memory_epsilon)
+            self.memory = PERMemory(memory_size, memory_alpha, memory_beta, memory_beta_increment, memory_epsilon, seed)
         else:
-            self.memory = RMemory(memory_size)
-        self.action_network = NNInitializer(network_type, network_size)
-        self.target_network = NNInitializer(network_type, network_size)
-        self.e_greedy = EGreedy(epsilon_start, epsilon_decay)
-        self.seed = seed
+            self.memory = RMemory(memory_size, seed)
+
+        self.seed(seed)
 
     def seed(self, seed) -> None:
         pass
