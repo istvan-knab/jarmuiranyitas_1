@@ -52,7 +52,9 @@ class DQNAgentWithPER(Agent):
         self.seed(seed)
 
     def seed(self, seed) -> None:
-        pass
+        random.seed(seed)
+        torch.manual_seed(seed)
+        np.random.seed(seed)
 
     def inference(self, state: np.ndarray) -> np.ndarray:
         pass
