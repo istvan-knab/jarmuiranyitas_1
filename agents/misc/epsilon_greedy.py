@@ -63,4 +63,8 @@ class EGreedy:
             #default case
             pass
 
-        #TODO:return parameter with the action value(not defined yet)
+        return action
+
+    @staticmethod
+    def seed(seed) -> None:
+        np.random.seed(seed)
