@@ -12,7 +12,7 @@ class Trainer:
     def train(self, episodes):
 
         for e in range(episodes):
-            state = self.env.reset(np.array([0.0, 0.0, 1.5]))
+            state = self.env.reset(np.array([0.0, 0.0, 1.5]).reshape((1, 3)))
             state.reshape((1, -1))
 
             while True:
