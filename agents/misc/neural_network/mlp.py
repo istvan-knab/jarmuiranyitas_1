@@ -10,8 +10,11 @@ class MultiLayerPerceptron(nn.Module):
         self._seed(seed)
 
         self.layers = {}
+        self.nn_parameters = nn.ParameterList()
         for x in range(len(size)-1):
-            self.layers["linear_{0}".format(x+1)] = nn.Linear(size[x], size[x+1])
+            layer = nn.Linear(size[x], size[x+1])
+            self.layers["linear_{0}".format(x+1)] = layer
+            self.nn_parameters.extend(layer.parameters())
 
         self.relu = nn.ReLU()
         self.sigmoid = nn.Sigmoid()
