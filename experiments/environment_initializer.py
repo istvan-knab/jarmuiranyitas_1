@@ -1,4 +1,5 @@
 import gym
+import os
 
 
 class EnvironmentInitializer:
