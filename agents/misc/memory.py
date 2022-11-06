@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-import numpy as np
+from collections import namedtuple
 
 
 class Memory(ABC):
