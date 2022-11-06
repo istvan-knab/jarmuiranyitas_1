@@ -14,6 +14,8 @@ class Memory(ABC):
         save(self, experience: np.ndarray) -> None
         sample(self)
     """
+    MEMORY_ITEM = namedtuple('Transition', ('state', 'action', 'next_state', 'reward', 'done'))
+
     @abstractmethod
     def __init__(self, size: int) -> None:
         """
