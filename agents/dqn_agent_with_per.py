@@ -5,12 +5,13 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optimizer
+from torch.utils.tensorboard import SummaryWriter
 
 from jarmuiranyitas_1.agents.agent import Agent
 from jarmuiranyitas_1.agents.misc.per_memory import PERMemory
 from jarmuiranyitas_1.agents.misc.r_memory import RMemory
 from jarmuiranyitas_1.agents.misc.epsilon_greedy import EGreedy
-from jarmuiranyitas_1.agents.misc.neural_network import NNInitializer
+from jarmuiranyitas_1.agents.misc.nn_initializer import NNInitializer
 
 
 class DQNAgentWithPER(Agent):
