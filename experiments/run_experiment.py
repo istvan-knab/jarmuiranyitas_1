@@ -10,7 +10,7 @@ SEED = 0
 MAP_NAME = 'xyz_palya'
 TRAINING_NAME = 'Training_results_' + MAP_NAME + '_' + str(SEED)
 AGENT = 'dqn'
-MAX_EPISODES = 1e6
+MAX_EPISODES = 1000000
 MAP_EXT = '.png'
 ENV_NAME = 'f110'
 
