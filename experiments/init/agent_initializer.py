@@ -1,3 +1,4 @@
+import os
 import yaml
 from argparse import Namespace
 
@@ -42,7 +43,8 @@ class AgentInitializer:
 
         :return: None
         """
-        with open('agent_config.yaml') as file:
+        path = os.path.abspath('init/agent_config.yaml')
+        with open(path) as file:
             conf_dict = yaml.load(file, Loader=yaml.FullLoader)
         self._config = Namespace(**conf_dict)
 
