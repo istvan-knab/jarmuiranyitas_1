@@ -1,5 +1,6 @@
 import gym
 import os
+from abc import abstractmethod
 
 
 class EnvironmentInitializer:
