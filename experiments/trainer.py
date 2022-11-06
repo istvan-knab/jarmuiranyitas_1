@@ -4,6 +4,7 @@ import torch
 
 
 class Trainer:
+
     def __init__(self, agent, env, name):
         self.env = env
         self.name = name
@@ -32,3 +33,16 @@ class Trainer:
 
         torch.save(self.agent.action_net, "Models/f110_" + ".pth")
         sys.exit()
+=======
+    def __init__(self, name, env, agent, max_episodes):
+        self.MAX_EPISODE = max_episodes
+
+    def train(self):
+        """
+        Training loop
+        Returns:
+
+        """
+        for episode in range(self.EPISODE):
+            pass
+
