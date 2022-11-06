@@ -5,6 +5,15 @@ from jarmuiranyitas_1.experiments.agent_initializer import AgentInitializer
 from jarmuiranyitas_1.experiments.environment_initializer import EnvironmentInitializer
 
 
+# Defaults
+SEED = None
+MAP_NAME = 'xyz_palya'
+TRAINING_NAME = 'Training_results_' + MAP_NAME + '_' + str(SEED)
+AGENT = 'dqn'
+MAX_EPISODES = 1e6
+MAP_EXT = '.png'
+
+
 def main():
     arg_parser = ArgumentParser()
     arg_parser.add_argument("--seed", default=None, type=int)
