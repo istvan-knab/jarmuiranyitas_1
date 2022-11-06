@@ -2,14 +2,18 @@
 seed: 0
 
 # DQN agent
-dqn_learning_rate: 1e-4
+dqn_learning_rate: 0.0001
 dqn_discount_factor: 0.99
 dqn_batch_size: 128
-dqn_network_size: None
-dqn_network_type: "cnn"
+dqn_network_size:
+  - 1080
+  - 256
+  - 128
+  - 6
+dqn_network_type: "mlp"
 dqn_epsilon_start: 1
 dqn_epsilon_decay: 0.99
-dqn_memory_size: 1e20
+dqn_memory_size: 131072
 dqn_memory_alpha: 0.6
 dqn_memory_beta: 0.4
 dqn_memory_beta_increment: 0.0005
