@@ -1,35 +1,28 @@
 import random
-from collections import deque
+from collections import deque, namedtuple
+
+from jarmuiranyitas_1.agents.misc.memory import Memory
 
 
-class RMemory(object):
-    """
-    This class is responsible for storing the experiments batched in a tuple
-    The deque represents the memory , with 2 dimensional list
-    state : not implemented yet
-    reward : float
-    action : not implemented yet
-    next state :not implemented yet
-    done : bool
-    """
+class RMemory(Memory):
 
-    def __init__(self, BUFFER_SIZE):
+    MEMORY_ITEM = namedtuple('Transition', ('state', 'action', 'next_state', 'reward', 'done'))
 
-        self.memory = deque([[],[],[],[],[]], maxlen=BUFFER_SIZE)
+    def __init__(self, size: int, seed: int) -> None:
+        self.memory = deque(maxlen=size)
+        self.seed(seed)
 
-    def push(self):
-        """
-        Save a transition
-        :return:
-        """
-        #define tuple outside
-        pass
+    def __len__(self) -> int:
+        return len(self.memory)
 
-    def sample(self, batch_size):
-        """
-        RAndom sample for optimization
-        :param batch_size: integer
-        :return: sample
-        """
-        return random.sample(self.memory, batch_size)
+    def save(self, **kwargs) -> None:
+        experience = self.MEMORY_ITEM(kwargs["state"], kwargs["action"], kwargs["next_state"], kwargs["reward"],
+                                      kwargs["done"])
 
+        self.memory.append(experience)
+
+    def sample(self, size: int) -> list:
+        return random.sample(self.memory, size)
+
+    def seed(self, seed: int) -> None:
+        random.seed(seed)
