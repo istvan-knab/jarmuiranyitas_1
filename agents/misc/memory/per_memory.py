@@ -1,6 +1,6 @@
 from collections import namedtuple
 
-from jarmuiranyitas_1.agents.misc.memory import Memory
+from jarmuiranyitas_1.agents.misc.memory.memory import Memory
 
 
 class PERMemory(Memory):

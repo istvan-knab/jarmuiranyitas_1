@@ -1,7 +1,7 @@
 import random
 from collections import deque, namedtuple
 
-from jarmuiranyitas_1.agents.misc.memory import Memory
+from jarmuiranyitas_1.agents.misc.memory.memory import Memory
 
 
 class RMemory(Memory):

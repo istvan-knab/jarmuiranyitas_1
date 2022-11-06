@@ -1,4 +1,4 @@
-from jarmuiranyitas_1.agents.misc.mlp import MultiLayerPerceptron
+from jarmuiranyitas_1.agents.misc.neural_network.mlp import MultiLayerPerceptron
 
 
 class NNInitializer:

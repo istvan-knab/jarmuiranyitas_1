@@ -1,8 +1,8 @@
 from argparse import ArgumentParser
 
-from jarmuiranyitas_1.experiments.trainer import Trainer
-from jarmuiranyitas_1.experiments.agent_initializer import AgentInitializer
-from jarmuiranyitas_1.experiments.environment_initializer import EnvironmentInitializer
+from jarmuiranyitas_1.experiments.init.trainer import Trainer
+from jarmuiranyitas_1.experiments.init.agent_initializer import AgentInitializer
+from jarmuiranyitas_1.experiments.init.environment_initializer import EnvironmentInitializer
 
 
 # Defaults

@@ -30,5 +30,5 @@ class Trainer:
                     self.agent.fit()
                     break
 
-        torch.save(self.agent.action_net, "Models/f110_" + ".pth")
+        torch.save(self.agent.action_net, "../models/f110_" + ".pth")
         sys.exit()
