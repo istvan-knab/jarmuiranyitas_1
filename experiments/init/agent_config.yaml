@@ -1,0 +1,18 @@
+# DQN agent
+dqn_learning_rate: 0.0001
+dqn_discount_factor: 0.99
+dqn_batch_size: 128
+dqn_network_size:
+  - 1080
+  - 256
+  - 128
+  - 6
+dqn_network_type: "mlp"
+dqn_epsilon_start: 1
+dqn_epsilon_decay: 0.99
+dqn_memory_size: 131072
+dqn_memory_alpha: 0.6
+dqn_memory_beta: 0.4
+dqn_memory_beta_increment: 0.0005
+dqn_memory_epsilon: 0.01
+dqn_per: False
