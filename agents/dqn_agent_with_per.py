@@ -57,7 +57,13 @@ class DQNAgentWithPER(Agent):
         np.random.seed(seed)
 
     def inference(self, state: np.ndarray) -> np.ndarray:
-        pass
+        action = self.e_greedy.choose_action()
+        if action is None:
+            state = torch.FloatTensor(state)
+            action = self.action_network(state)
+            action = torch.argmax(action)
+
+        return action
 
     def fit(self) -> None:
         pass
