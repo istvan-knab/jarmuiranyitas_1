@@ -17,10 +17,11 @@ class Memory(ABC):
     MEMORY_ITEM = namedtuple('Transition', ('state', 'action', 'next_state', 'reward', 'done'))
 
     @abstractmethod
-    def __init__(self, size: int) -> None:
+    def __init__(self, size: int, seed: int) -> None:
         """
 
         :param size: size of the memory buffer
+        :param seed:
         :return: None
         """
         pass
