@@ -16,11 +16,12 @@ MAP_EXT = '.png'
 
 def main():
     arg_parser = ArgumentParser()
-    arg_parser.add_argument("--seed", default=None, type=int)
-    arg_parser.add_argument("--map_name", default='xyz_palya', type=str)
-    arg_parser.add_argument("--training_name", default='Training_results', type=str)
-    arg_parser.add_argument("--agent", default='dqn', type=str)
-    arg_parser.add_argument("--max_episodes", default=1e6, type=int)
+    arg_parser.add_argument("--seed", default=SEED, type=int)
+    arg_parser.add_argument("--map_name", default=MAP_NAME, type=str)
+    arg_parser.add_argument("--training_name", default=TRAINING_NAME, type=str)
+    arg_parser.add_argument("--agent", default=AGENT, type=str)
+    arg_parser.add_argument("--max_episodes", default=MAX_EPISODES, type=int)
+    arg_parser.add_argument("--map_ext", default=MAP_EXT, type=str)
     args = arg_parser.parse_args()
 
     env_initializer = EnvironmentInitializer(args.seed, args.map_name)
