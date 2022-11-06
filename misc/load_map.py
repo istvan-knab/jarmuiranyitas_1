@@ -17,7 +17,7 @@ class MapLoader(ABC):
 
 class MatlabMapLoader(MapLoader):
     def load(self, file_name: str) -> np.ndarray:
-        map_data = scipy.io.loadmat("maps/" + file_name + '.mat')
+        map_data = loadmat("maps/" + file_name + '.mat')
         map_data = map_data['xyz']
         map_data = np.delete(map_data, (2, 3), 1)
 
