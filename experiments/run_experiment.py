@@ -26,11 +26,12 @@ def main():
     arg_parser.add_argument("--env_name", default=ENV_NAME, type=str)
     args = arg_parser.parse_args()
 
-    env_initializer = EnvironmentInitializer(args.seed, args.map_name, args.map_ext)
+    env_initializer = EnvironmentInitializer(env_name=args.env_name, seed=args.seed, map_name=args.map_name,
+                                             map_ext=args.map_ext)
     agent_initializer = AgentInitializer(args.seed, args.agent)
-    trainer = Trainer(env_initializer.env, agent_initializer.agent, args.max_episodes, args.training_name)
+    trainer = Trainer(agent_initializer.agent, env_initializer.env, args.training_name)
 
-    trainer.train()
+    trainer.train(args.max_episodes)
 
 
 if __name__ == "__main__":
