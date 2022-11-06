@@ -66,4 +66,43 @@ class DQNAgentWithPER(Agent):
         return action
 
     def fit(self) -> None:
-        pass
+        size = min(self.batch_size, len(self.memory))
+
+        sample = self.memory.sample(size)
+        mini_batch = self.memory.MEMORY_ITEM(*zip(*sample))
+
+        state_batch = torch.FloatTensor(mini_batch.state)
+        action_batch = torch.reshape(torch.LongTensor(mini_batch.action), (self.batch_size, 1))
+        next_state_batch = torch.FloatTensor(mini_batch.next_state)
+        reward_batch = torch.reshape(torch.FloatTensor(mini_batch.reward), (self.batch_size, 1))
+
+        with torch.no_grad():
+            output_next_state_batch = torch.reshape(self.target_network(next_state_batch), (size, -1))
+
+        y_batch = []
+        for i in range(size):
+            if mini_batch.done[i]:
+                y_batch.append(reward_batch[i])
+            else:
+                y_batch.append(reward_batch[i] + self.discount_factor * torch.max(output_next_state_batch[i]))
+
+        y_batch = torch.cat(y_batch)
+        output_batch = torch.reshape(self.action_network(state_batch), (size, -1))
+
+        q_values = (torch.gather(output_batch, 1, action_batch)).squeeze()
+
+        errors = torch.abs(q_values - y_batch).data.numpy()
+
+        self.optimizer.zero_grad()
+        loss = torch.mean(self.criterion(q_values, y_batch))
+        loss.backward()
+        for param in self.action_network.parameters():
+            param.grad.data.clamp_(-1, 1)
+
+        self.optimizer.step()
+
+    def update_networks(self):
+        self.target_network.load_state_dict(OrderedDict(self.action_network.state_dict()))
+
+    def save_experience(self, **kwargs):
+        self.memory.save(**kwargs)
