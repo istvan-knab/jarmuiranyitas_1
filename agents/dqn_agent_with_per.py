@@ -39,7 +39,7 @@ class DQNAgentWithPER(Agent):
         self.target_network = nn_initializer.generate_nn()
         self.update_networks()
 
-        self.optimizer = optimizer.Adam(self.action_network.parameters(), lr=learning_rate)
+        self.optimizer = optimizer.Adam(self.action_network.nn_parameters, lr=learning_rate)
         self.criterion = nn.MSELoss()
         self.summary_writer = SummaryWriter(log_dir="../experiments/logs")
         self.e_greedy = EGreedy(epsilon_start, epsilon_decay, seed, network_size[-1])
