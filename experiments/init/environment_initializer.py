@@ -1,4 +1,4 @@
-import gym
+from jarmuiranyitas_1.f110_env.f110_gym.envs.f110_env import F110Env
 import os
 from abc import abstractmethod
 
@@ -26,5 +26,4 @@ class EnvironmentInitializer:
     def _create_env_f110(self, **kwargs):
         path = os.path.abspath("../misc/maps")
         path = ''.join([path, "/", kwargs["map_name"]])
-        self._env = gym.make('gym:f110-v0', seed=kwargs["seed"], map=path, map_ext=kwargs["map_ext"],
-                             num_agents=1, timestep=0.01)
+        self._env = F110Env(seed=kwargs["seed"], map=path, map_ext=kwargs["map_ext"], num_agents=1, timestep=0.01)
