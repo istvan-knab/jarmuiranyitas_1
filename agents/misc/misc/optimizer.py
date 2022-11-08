@@ -14,7 +14,7 @@ class Optimizer:
     """
 
     MEMORY_ITEM = namedtuple('Transition', ('state', 'action', 'next_state', 'reward', 'done'))
-    def __init__(self, memory, BATCH_SIZE, optimizer, loss):
+    def __init__(self, memory: namedtuple, BATCH_SIZE : int, optimizer, loss)->None:
         self.memory = memory
         self.BATCH_SIZE = BATCH_SIZE
         self.size = min(self.batch_size, len(self.memory))
@@ -31,7 +31,7 @@ class Optimizer:
         self.reward_batch = torch.reshape(torch.FloatTensor(mini_batch.reward), (self.batch_size, 1))
 
         with torch.no_grad():
-            output_next_state_batch = torch.reshape(self.target_network(self.next_state_batch), (self.size, -1))
+            self.output_next_state_batch = torch.reshape(self.target_network(self.next_state_batch), (self.size, -1))
 
     def calc_q_value(self):
 
