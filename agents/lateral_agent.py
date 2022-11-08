@@ -1,5 +1,9 @@
 from abc import ABC, abstractmethod
 import numpy as np
+import torch
+import random
+
+from jarmuiranyitas_1.agents.misc.misc.optimizer import Optimizer
 
 
 class Agent(ABC):
@@ -62,13 +66,15 @@ class Agent(ABC):
         :param seed: int value for seeding the agent
         :return: None
         """
+        random.seed(seed)
+        torch.manual_seed(seed)
+        np.random.seed(seed)
         pass
 
     @abstractmethod
     def save_experience(self, **kwargs):
         """
-
         :param kwargs:
         :return:
         """
-        pass
+        self.memory.save(**kwargs)
