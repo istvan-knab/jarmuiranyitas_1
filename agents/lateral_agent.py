@@ -4,9 +4,10 @@ import torch
 import random
 
 from jarmuiranyitas_1.agents.misc.misc.optimizer import Optimizer
+from jarmuiranyitas_1.agents.misc.misc.epsilon_greedy import EGreedy
 
 
-class Agent(ABC):
+class LateralAgent(ABC):
     """
     ------------------------
          ***abstract***
@@ -27,11 +28,16 @@ class Agent(ABC):
     """
     @abstractmethod
     def __init__(self,
-                 learning_rate: float,
-                 discount_factor: float,
-                 batch_size: int,
-                 network_size: list,
-                 seed: int) -> None:
+                 learning_rate: float = 1e-4,
+                 discount_factor: float = 0.99,
+                 batch_size: int = 128,
+                 network_size: list = None,
+                 network_type: str = "mlp",
+                 seed: int = 0,
+                 epsilon_start: float = 1,
+                 epsilon_decay: float = 0.99,
+                 BUFFER_SIZE: int = 1e20,
+                 )->None:
         """
         This function initializes the agent corresponding to its type and the given parameters.
         :param learning_rate: alpha parameter
