@@ -1,11 +1,13 @@
 from abc import ABC, abstractmethod
 import numpy as np
+import torch
+from torch import nn
 
 from jarmuiranyitas_1.agents.agent import Agent
-
-
+from torch.utils.tensorboard import SummaryWriter
 from jarmuiranyitas_1.agents.misc.misc.optimizer import Optimizer
 from jarmuiranyitas_1.agents.misc.misc.epsilon_greedy import EGreedy
+from jarmuiranyitas_1.agents.misc.memory.r_memory import RMemory
 
 
 class LateralAgent(Agent):
@@ -29,11 +31,15 @@ class LateralAgent(Agent):
     """
     @abstractmethod
     def __init__(self,
-                 learning_rate: float,
-                 discount_factor: float,
-                 batch_size: int,
-                 network_size: list,
-                 seed: int) -> None:
+                 learning_rate: float = 1e-4,
+                 discount_factor: float = 0.99,
+                 batch_size: int = 128,
+                 network_size: list = None,
+                 network_type: str = "mlp",
+                 seed: int = 0,
+                 epsilon_start: float = 1,
+                 epsilon_decay: float = 0.99,
+                 BUFFER_SIZE = 1e20) -> None:
         """
         This function initializes the agent corresponding to its type and the given parameters.
         :param learning_rate: alpha parameter
@@ -42,7 +48,23 @@ class LateralAgent(Agent):
         :param network_size: size of the different layers in the neural network
         :param seed: seed number
         """
-        pass
+        #net and bellman parameters
+        self.alpha = learning_rate
+        self.gamma = discount_factor
+        self.batch_size = batch_size
+        self.network_size = network_size
+        self.network_type = network_type
+        self.BUFFER_SIZE = BUFFER_SIZE
+
+        #logging results
+        self.summary_writer = SummaryWriter(log_dir="../experiments/logs")
+
+        #objects
+        self.e_greedy = EGreedy(epsilon_start, epsilon_decay, seed, network_size[-1])
+        self.memory = RMemory(self.BUFFER_SIZE, seed)
+        self.loss = nn.MSELoss()
+        self.optimizer = optimizer.Adam(self.action_network.nn_parameters, lr=learning_rate)
+
 
     @abstractmethod
     def fit(self) -> None:
