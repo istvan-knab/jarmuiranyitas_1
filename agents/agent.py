@@ -1,14 +1,11 @@
 from abc import ABC, abstractmethod
 import numpy as np
 
-from jarmuiranyitas_1.agents.agent import Agent
-
-
 from jarmuiranyitas_1.agents.misc.misc.optimizer import Optimizer
 from jarmuiranyitas_1.agents.misc.misc.epsilon_greedy import EGreedy
 
 
-class LateralAgent(Agent):
+class Agent(ABC):
     """
     ------------------------
          ***abstract***
@@ -27,6 +24,7 @@ class LateralAgent(Agent):
         inference(self, state: np.ndarray) -> np.ndarray
         seed(self, seed) -> None
     """
+
     @abstractmethod
     def __init__(self,
                  learning_rate: float,
