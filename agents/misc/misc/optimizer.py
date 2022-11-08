@@ -14,11 +14,12 @@ class Optimizer:
     """
 
     MEMORY_ITEM = namedtuple('Transition', ('state', 'action', 'next_state', 'reward', 'done'))
-    def __init__(self, memory, BATCH_SIZE , optimizer):
+    def __init__(self, memory, BATCH_SIZE, optimizer, loss):
         self.memory = memory
         self.BATCH_SIZE = BATCH_SIZE
         self.size = min(self.batch_size, len(self.memory))
         self.optimizer = optimizer
+        self.loss = loss
 
     def get_sample(self):
         sample = self.memory.sample(self.size)
