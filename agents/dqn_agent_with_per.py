@@ -71,9 +71,9 @@ class DQNAgentWithPER(Agent):
         mini_batch = self.memory.MEMORY_ITEM(*zip(*sample))
 
         state_batch = torch.FloatTensor(mini_batch.state)
-        action_batch = torch.reshape(torch.LongTensor(mini_batch.action), (self.batch_size, 1))
+        action_batch = torch.reshape(torch.LongTensor(mini_batch.action), (size, 1))
         next_state_batch = torch.FloatTensor(mini_batch.next_state)
-        reward_batch = torch.reshape(torch.FloatTensor(mini_batch.reward), (self.batch_size, 1))
+        reward_batch = torch.reshape(torch.FloatTensor(mini_batch.reward), (size, 1))
 
         with torch.no_grad():
             output_next_state_batch = torch.reshape(self.target_network(next_state_batch), (size, -1))
