@@ -13,6 +13,7 @@ TRAINING_NAME = 'Training_results_' + MAP_NAME + '_' + str(SEED)
 AGENT = 'dqn'
 MAX_EPISODES = 1000000
 ENV_NAME = 'f110'
+GUI = False
 
 
 def main():
@@ -24,6 +25,7 @@ def main():
     arg_parser.add_argument("--max_episodes", default=MAX_EPISODES, type=int)
     arg_parser.add_argument("--map_ext", default=MAP_EXT, type=str)
     arg_parser.add_argument("--env_name", default=ENV_NAME, type=str)
+    arg_parser.add_argument("--gui", default=GUI, type=bool)
     args = arg_parser.parse_args()
 
     env_initializer = EnvironmentInitializer(env_name=args.env_name, seed=args.seed, map_name=args.map_name,
