@@ -12,18 +12,17 @@ class Trainer:
     def train(self, episodes):
 
         for e in range(episodes):
-            state = self.env.reset(np.array([[0.0, 0.0, 0.0]]))
-            state.reshape((1, -1))
+            state, _, _, _ = self.env.reset(np.array([[0.0, 0.0, 2.8]]))
 
             while True:
                 self.env.render()
 
-                action = self.agent.inference(state)
+                action = self.agent.inference(state['scans'][0])
 
-                next_state, reward, done, _ = self.env.step(action)
-                next_state.reshape((1, -1))
+                next_state, reward, done, _ = self.env.step(np.array([[steering[action], 1.0]]))
 
-                self.agent.save_transition(state=state, action=action, next_state=next_state, reward=reward, done=done)
+                self.agent.save_experience(state=state['scans'][0], action=action, next_state=next_state['scans'][0],
+                                           reward=reward, done=done)
                 state = next_state
 
                 if done:
