@@ -28,7 +28,11 @@ class Trainer:
 
                 if done:
                     self.agent.fit()
+                    print("Episode: {0}/{1}\nCurrent epsilon: {2}".format(e, episodes,
+                                                                          self.agent.e_greedy.current_epsilon))
+
+                    if e % 1000 == 0:
+                        torch.save(self.agent.action_network, "models/f110_" + ".pth")
                     break
 
-        torch.save(self.agent.action_net, "../models/f110_" + ".pth")
         sys.exit()
