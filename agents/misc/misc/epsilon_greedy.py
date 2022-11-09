@@ -26,9 +26,10 @@ class EGreedy:
         if np.random.random() <= self.current_epsilon:
             action = np.random.randint(0, self.output_dim)
 
-        self.current_epsilon = self.current_epsilon * self.epsilon_decay
-
         return action
+
+    def update_epsilon(self):
+        self.current_epsilon = self.current_epsilon * self.epsilon_decay
 
     @staticmethod
     def seed(seed) -> None:
