@@ -10,6 +10,7 @@ class Trainer:
         self.agent = agent
 
     def train(self, episodes):
+        steering = [-0.4, -0.2, 0.0, 0.2, 0.4]
 
         for e in range(episodes):
             state, _, _, _ = self.env.reset(np.array([[0.0, 0.0, 2.8]]))
