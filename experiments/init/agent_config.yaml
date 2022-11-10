@@ -10,7 +10,7 @@ dqn_network_size:
   - 5
 dqn_network_type: "mlp"
 dqn_epsilon_start: 1
-dqn_epsilon_decay: 0.997
+dqn_epsilon_decay: 0.9993
 dqn_memory_size: 100000
 dqn_memory_alpha: 0.6
 dqn_memory_beta: 0.4
