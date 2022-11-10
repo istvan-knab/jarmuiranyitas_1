@@ -1,1 +1,8 @@
 #yaml config file for env
+
+seed: 0.0
+path: os.path.abspath("../misc/maps")
+map_ext:
+num_agents: 1
+time_step: 0.01
+
