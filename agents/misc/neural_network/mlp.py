@@ -20,7 +20,7 @@ class MultiLayerPerceptron(nn.Module):
         self.sigmoid = nn.Sigmoid()
 
     def forward(self, x):
-        out = self.linear_1(x)
+        out = self.layers["linear_1"](x)
         for i in range(len(self.layers)-1):
             out = self.relu(out)
             out = self.layers["linear_{0}".format(i+2)](out)
