@@ -243,7 +243,7 @@ class F110Env(gym.Env):
 
 
         F110Env.current_obs = obs
-        obs['scans'] = self.cut_lidar_parts(obs['scans'])
+        #obs['scans'] = self.cut_lidar_parts(obs['scans'])
 
         self.render_obs = {
             'ego_idx': obs['ego_idx'],

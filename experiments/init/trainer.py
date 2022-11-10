@@ -16,7 +16,7 @@ class Trainer:
             state, _, _, _ = self.env.reset(np.array([[0.0, 0.0, 2.8]]))
 
             while True:
-                self.env.render()
+                #self.env.render()
 
                 action = self.agent.inference(state['scans'][0])
 
