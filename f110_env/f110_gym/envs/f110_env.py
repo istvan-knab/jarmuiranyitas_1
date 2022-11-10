@@ -216,6 +216,7 @@ class F110Env(gym.Env):
         self.poses_theta = obs_dict['poses_theta']
         self.collisions = obs_dict['collisions']
 
+
     def step(self, action):
         """
         Step function for the gym env
