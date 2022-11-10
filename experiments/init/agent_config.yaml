@@ -3,7 +3,7 @@ dqn_learning_rate: 0.0001
 dqn_discount_factor: 0.95
 dqn_batch_size: 128
 dqn_network_size:
-  - 1080
+  - 800
   - 512
   - 256
   - 128

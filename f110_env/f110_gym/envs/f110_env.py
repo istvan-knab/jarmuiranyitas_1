@@ -158,9 +158,12 @@ class F110Env(gym.Env):
         pass
 
     def cut_lidar_parts(self,input_scan):
-        #TODO: implement this function
-        #TODO: range estimation
-        cutted_scan = input_scan
+
+        cut_last = len(input_scan)-140
+        cut_first = 140
+
+        cutted_scan = input_scan[:cut_last]
+        cutted_scan = cutted_scan[cut_first:]
         return cutted_scan
     def _check_done(self):
         """
@@ -243,7 +246,7 @@ class F110Env(gym.Env):
 
 
         F110Env.current_obs = obs
-        #obs['scans'] = self.cut_lidar_parts(obs['scans'])
+        obs['scans'][0] = self.cut_lidar_parts(obs['scans'][0])
 
         self.render_obs = {
             'ego_idx': obs['ego_idx'],
