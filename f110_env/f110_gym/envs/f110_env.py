@@ -157,28 +157,6 @@ class F110Env(gym.Env):
         """
         pass
 
-    def divide_redundancy(self,cutted_scan):
-
-        new_data = list()
-
-        for i in range(len(cutted_scan)):
-            if i%4 == 0:
-                new_data.append(cutted_scan[i])
-
-        return new_data
-
-    def cut_lidar_parts(self,input_scan):
-
-        cut_last = len(input_scan)-140
-        cut_first = 140
-
-        cutted_scan = input_scan[:cut_last]
-        cutted_scan = cutted_scan[cut_first:]
-
-        #optional : reduce state space by dividing by 4
-        #cutted_scan = self.divide_redundancy(cutted_scan = cutted_scan)
-
-        return cutted_scan
     def _check_done(self):
         """
         Check if the current rollout is done
@@ -260,7 +238,6 @@ class F110Env(gym.Env):
 
 
         F110Env.current_obs = obs
-        obs['scans'][0] = self.cut_lidar_parts(obs['scans'][0])
 
         self.render_obs = {
             'ego_idx': obs['ego_idx'],

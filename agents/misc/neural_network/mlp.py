@@ -11,7 +11,7 @@ class MultiLayerPerceptron(nn.Module):
 
         self.layers = {}
         self.nn_parameters = nn.ParameterList()
-        for x in range(len(size)-1):
+        for x in range(len(size) - 1):
             layer = nn.Linear(size[x], size[x+1])
             self.layers["linear_{0}".format(x+1)] = layer
             self.nn_parameters.extend(layer.parameters())
