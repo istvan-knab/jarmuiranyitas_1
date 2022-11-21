@@ -33,13 +33,15 @@ class DQNAgentWithPER(Agent):
 
         self.discount_factor = discount_factor
         self.batch_size = batch_size
+        self.learning_rate = learning_rate
+        self.loss = 0
 
         nn_initializer = NNInitializer(network_type, network_size, seed)
         self.action_network = nn_initializer.generate_nn()
         self.target_network = nn_initializer.generate_nn()
         self.update_networks()
 
-        self.optimizer = optimizer.Adam(self.action_network.nn_parameters, lr=learning_rate)
+        self.optimizer = optimizer.Adam(self.action_network.nn_parameters, lr=self.learning_rate)
         self.criterion = nn.MSELoss()
         self.summary_writer = SummaryWriter(log_dir="../experiments/logs")
         self.e_greedy = EGreedy(epsilon_start, epsilon_decay, seed, network_size[-1])
