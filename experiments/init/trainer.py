@@ -15,7 +15,11 @@ class Trainer:
         reward_over_100_episode = deque(maxlen=100)
 
         for e in range(episodes):
-            state, _, _, _ = self.env.reset(np.array([[0.0, 0.0, 2.8]]))
+            state, _, _, _ = self.env.reset(np.array([[0, 0, 3.0]]))
+            state = state['scans'][0][180:900:24]
+            state /= 8
+            reward_sum = 0
+            time = 0
 
             while True:
                 self.env.render()
