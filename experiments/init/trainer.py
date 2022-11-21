@@ -10,7 +10,9 @@ class Trainer:
         self.agent = agent
 
     def train(self, episodes):
-        steering = [-0.4, -0.2, 0.0, 0.2, 0.4]
+        torch.set_flush_denormal(True)
+        steering = [-0.4, 0.0, 0.4]
+        reward_over_100_episode = deque(maxlen=100)
 
         for e in range(episodes):
             state, _, _, _ = self.env.reset(np.array([[0.0, 0.0, 2.8]]))
