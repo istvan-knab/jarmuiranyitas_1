@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 import numpy as np
-import torch
-import random
+
+from jarmuiranyitas_1.agents.misc.misc.epsilon_greedy import EGreedy
 
 
 class Agent(ABC):
