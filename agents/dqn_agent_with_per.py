@@ -108,3 +108,6 @@ class DQNAgentWithPER(Agent):
 
     def save_experience(self, **kwargs):
         self.memory.save(**kwargs)
+
+    def write(self, subject: str, value: float, e):
+        self.summary_writer.add_scalar(subject, value, e)
