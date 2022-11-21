@@ -103,8 +103,6 @@ class DQNAgentWithPER(Agent):
 
         self.optimizer.step()
 
-        self.e_greedy.update_epsilon()
-
     def update_networks(self):
         self.target_network.load_state_dict(OrderedDict(self.action_network.state_dict()))
 
