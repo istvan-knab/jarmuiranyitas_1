@@ -22,14 +22,51 @@ class Trainer:
             time = 0
 
             while True:
-                self.env.render()
+                action = self.agent.inference(state)
+                # self.env.render()
 
-                action = self.agent.inference(state['scans'][0])
+                next_state, reward, done, _ = self.env.step(np.array([[steering[action], 0.5]]))
+                next_state = next_state['scans'][0][180:900:24]
+                next_state /= 8
 
-                next_state, reward, done, _ = self.env.step(np.array([[steering[action], 1.0]]))
+                if done:
+                    reward = - 1
 
-                self.agent.save_experience(state=state['scans'][0], action=action, next_state=next_state['scans'][0],
-                                           reward=reward, done=done)
+                else:
+                    min_dist = min(next_state)
+                    min_dist_index = np.argmin(next_state)
+                    if 0 < min_dist_index < len(next_state) - 1:
+                        min_plus_1_angle = np.deg2rad((min_dist_index + 1) * 6)
+                        min_minus_1_angle = np.deg2rad((min_dist_index - 1) * 6)
+                        x_1 = np.cos(min_plus_1_angle) * next_state[min_dist_index + 1]
+                        x_2 = np.cos(min_minus_1_angle) * next_state[min_dist_index - 1]
+                        y_1 = np.sin(min_plus_1_angle) * next_state[min_dist_index + 1]
+                        y_2 = np.sin(min_minus_1_angle) * next_state[min_dist_index - 1]
+                    elif min_dist_index == 0:
+                        min_plus_1_angle = np.deg2rad(6)
+                        x_1 = np.cos(min_plus_1_angle) * next_state[1]
+                        x_2 = next_state[0]
+                        y_1 = np.sin(min_plus_1_angle) * next_state[1]
+                        y_2 = 0
+                    else:
+                        min_minus_1_angle = np.deg2rad(174)
+                        x_1 = - next_state[min_dist_index]
+                        x_2 = np.cos(min_minus_1_angle) * next_state[min_dist_index - 1]
+                        y_1 = 0
+                        y_2 = np.sin(min_minus_1_angle) * next_state[min_dist_index - 1]
+
+                    delta_x = abs(x_1 - x_2)
+                    delta_y = abs(y_1 - y_2)
+                    relative_yaw_angle = np.pi / 2 - np.arctan(delta_y / delta_x)
+                    reward1 = np.interp(np.cos(relative_yaw_angle), (0.95, 1.0), (- 0.5, 0.5))
+                    reward2 = np.interp(min_dist, (0.0375, 0.0625), (-0.5, 0.5))
+
+                    reward = reward1 + reward2
+
+                reward_sum += reward
+                time += 1
+
+                self.agent.save_experience(state=state, action=action, next_state=next_state, reward=reward, done=done)
                 state = next_state
 
                 if done:
