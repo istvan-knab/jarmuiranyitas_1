@@ -1,0 +1,8 @@
+#yaml config file for env
+
+seed: 0
+path: ../misc/maps/xyz_palya
+map_ext: .png
+num_agents: 1
+time_step: 0.01
+

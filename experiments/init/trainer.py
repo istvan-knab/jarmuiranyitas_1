@@ -23,6 +23,7 @@ class Trainer:
             time = 0
 
             while True:
+
                 action = self.agent.inference(state)
                 # self.env.render()
 
