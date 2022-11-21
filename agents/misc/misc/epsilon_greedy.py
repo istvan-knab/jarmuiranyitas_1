@@ -29,7 +29,7 @@ class EGreedy:
         return action
 
     def update_epsilon(self):
-        self.current_epsilon = self.current_epsilon * self.epsilon_decay
+        self.current_epsilon = max(self.current_epsilon * self.epsilon_decay, 0.01)
 
     @staticmethod
     def seed(seed) -> None:

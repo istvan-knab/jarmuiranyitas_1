@@ -17,7 +17,7 @@ class MapLoader(ABC):
 
 class MatlabMapLoader(MapLoader):
     def load(self, file_name: str) -> np.ndarray:
-        map_data = loadmat("maps/" + file_name + '.mat')
+        map_data = loadmat(file_name + '.mat')
         map_data = map_data['xyz']
         map_data = np.delete(map_data, (2, 3), 1)
 
@@ -66,7 +66,7 @@ def make_offset_polygon(old_x, old_y, offset, outer_ccw=1):
 
 def main():
     matlab_map_loader = MatlabMapLoader()
-    map_data = matlab_map_loader.load('xyz_palya')
+    map_data = matlab_map_loader.load('maps/xyz_palya')
 
     x_centerline = np.reshape(map_data[:, 0], (-1, 1))
     y_centerline = np.reshape(map_data[:, 1], (-1, 1))
