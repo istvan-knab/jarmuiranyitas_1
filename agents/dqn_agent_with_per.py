@@ -75,31 +75,29 @@ class DQNAgentWithPER(Agent):
         sample = self.memory.sample(size)
         mini_batch = self.memory.MEMORY_ITEM(*zip(*sample))
 
-        state_batch = torch.FloatTensor(mini_batch.state)
-        action_batch = torch.reshape(torch.LongTensor(mini_batch.action), (size, 1))
-        next_state_batch = torch.FloatTensor(mini_batch.next_state)
-        reward_batch = torch.reshape(torch.FloatTensor(mini_batch.reward), (size, 1))
+        state_batch = torch.reshape(torch.FloatTensor(mini_batch.state), (size, -1)).detach()
+        action_batch = torch.reshape(torch.LongTensor(mini_batch.action), (size, -1)).detach()
+        next_state_batch = torch.reshape(torch.FloatTensor(mini_batch.next_state), (size, -1)).detach()
+        reward_batch = torch.reshape(torch.FloatTensor(mini_batch.reward), (size, -1)).detach()
+        done_batch = torch.reshape(torch.FloatTensor(mini_batch.done), (size, -1)).detach()
 
         with torch.no_grad():
-            output_next_state_batch = torch.reshape(self.target_network(next_state_batch), (size, -1))
+            output_next_state_batch = self.target_network(next_state_batch).detach()
+            output_next_state_batch = torch.max(output_next_state_batch, 1)[0].detach()
+            output_next_state_batch = torch.reshape(output_next_state_batch, (size, -1)).detach()
 
-        y_batch = []
-        for i in range(size):
-            if mini_batch.done[i]:
-                y_batch.append(reward_batch[i])
-            else:
-                y_batch.append(reward_batch[i] + self.discount_factor * torch.max(output_next_state_batch[i]))
+        y_batch = reward_batch + self.discount_factor * output_next_state_batch * (1 - done_batch)
 
-        y_batch = torch.cat(y_batch)
-        output_batch = torch.reshape(self.action_network(state_batch), (size, -1))
+        output = torch.reshape(self.action_network(state_batch), (size, -1))
+        q_values = torch.gather(output, 1, action_batch)
 
-        q_values = (torch.gather(output_batch, 1, action_batch)).squeeze()
-
-        errors = torch.abs(q_values - y_batch).data.numpy()
+        loss = self.criterion(q_values, y_batch)
+        self.loss = float(loss)
 
         self.optimizer.zero_grad()
-        loss = torch.mean(self.criterion(q_values, y_batch))
+
         loss.backward()
+
         for param in self.action_network.parameters():
             param.grad.data.clamp_(-1, 1)
 
