@@ -1,6 +1,7 @@
 import sys
 import numpy as np
 import torch
+from collections import deque
 
 
 class Trainer:
@@ -69,12 +70,24 @@ class Trainer:
                 self.agent.save_experience(state=state, action=action, next_state=next_state, reward=reward, done=done)
                 state = next_state
 
-                if done:
+                if time % 10 == 0:
                     self.agent.fit()
-                    print("Episode: {0}/{1}\nCurrent epsilon: {2}".format(e, episodes,
-                                                                          self.agent.e_greedy.current_epsilon))
+                    self.agent.update_networks()
 
-                    if e % 1000 == 0:
+                if done:
+                    self.agent.e_greedy.update_epsilon()
+                    reward_over_100_episode.append(reward_sum)
+                    if e % 1 == 0:
+                        self.agent.update_networks()
+
+                    self.agent.write('Reward per episode', reward_sum, e+1)
+                    self.agent.write('Epsilon', self.agent.e_greedy.current_epsilon, e+1)
+                    self.agent.write('Loss', self.agent.loss, e+1)
+
+                    print('\rEpisode {}\tAverage Score: {:.2f}'.format(e, np.mean(reward_over_100_episode)), end="")
+                    if e % 100 == 0:
+                        print('\rEpisode {}\tAverage Score: {:.2f}\tCurrent epsilon: {:.8f}'.format
+                              (e, np.mean(reward_over_100_episode), self.agent.e_greedy.current_epsilon))
                         torch.save(self.agent.action_network, "models/f110_" + ".pth")
                     break
 
