@@ -60,8 +60,11 @@ class DQNAgentWithPER(Agent):
     def inference(self, state: np.ndarray) -> np.ndarray:
         action = self.e_greedy.choose_action()
         if action is None:
-            state = torch.FloatTensor(state)
-            action = self.action_network(state)
+            state = torch.FloatTensor(state).detach()
+            self.action_network.eval()
+            with torch.no_grad():
+                action = self.action_network(state)
+            self.action_network.train()
             action = torch.argmax(action)
 
         return action
