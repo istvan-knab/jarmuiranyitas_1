@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
 import numpy as np
 
-from jarmuiranyitas_1.agents.misc.misc.optimizer import Optimizer
 from jarmuiranyitas_1.agents.misc.misc.epsilon_greedy import EGreedy
 
 
