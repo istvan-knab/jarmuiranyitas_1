@@ -104,6 +104,8 @@ class DQNAgentWithPER(Agent):
 
         self.optimizer.step()
 
+
+
     def update_networks(self):
         self.target_network.load_state_dict(OrderedDict(self.action_network.state_dict()))
 
