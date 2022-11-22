@@ -10,8 +10,10 @@ class Trainer:
         self.name = name
         self.agent = agent
 
-    def get_reward(self,done,next_state):
-
+    def get_reward(self,done:bool,next_state:dict)->float:
+        """
+        Add custom reward for learning
+        """
         if done:
             reward = - 1
 
@@ -47,7 +49,11 @@ class Trainer:
             reward = reward1 + reward2
 
         return reward
+
     def train(self, episodes):
+        """
+        Training loop , here will learn the agent how to actuate
+        """
         torch.set_flush_denormal(True)
         steering = [-0.4, 0.0, 0.4]
         reward_over_100_episode = deque(maxlen=100)
