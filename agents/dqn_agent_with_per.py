@@ -38,8 +38,10 @@ class DQNAgentWithPER(Agent):
         self.loss = 0
 
         nn_initializer = NNInitializer(network_type, network_size, seed)
-        self.action_network = nn_initializer.generate_nn()
-        self.target_network = nn_initializer.generate_nn()
+        # self.action_network = nn_initializer.generate_nn()
+        # self.target_network = nn_initializer.generate_nn()
+        self.action_network = torch.load("../experiments/models/f110_2.pth")
+        self.target_network = torch.load("../experiments/models/f110_2.pth")
         self.update_networks()
 
         self.optimizer = optimizer.Adam(self.action_network.nn_parameters, lr=self.learning_rate)
