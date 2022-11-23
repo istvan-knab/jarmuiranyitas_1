@@ -78,11 +78,11 @@ class DQNAgentWithPER(Agent):
         sample = self.memory.sample(size)
         mini_batch = self.memory.MEMORY_ITEM(*zip(*sample))
 
-        state_batch = torch.reshape(torch.FloatTensor(mini_batch.state), (size, -1)).detach()
-        action_batch = torch.reshape(torch.LongTensor(mini_batch.action), (size, -1)).detach()
-        next_state_batch = torch.reshape(torch.FloatTensor(mini_batch.next_state), (size, -1)).detach()
-        reward_batch = torch.reshape(torch.FloatTensor(mini_batch.reward), (size, -1)).detach()
-        done_batch = torch.reshape(torch.FloatTensor(mini_batch.done), (size, -1)).detach()
+        state_batch = torch.reshape(torch.FloatTensor(np.array(mini_batch.state)), (size, -1)).detach()
+        action_batch = torch.reshape(torch.LongTensor(np.array(mini_batch.action)), (size, -1)).detach()
+        next_state_batch = torch.reshape(torch.FloatTensor(np.array(mini_batch.next_state)), (size, -1)).detach()
+        reward_batch = torch.reshape(torch.FloatTensor(np.array(mini_batch.reward)), (size, -1)).detach()
+        done_batch = torch.reshape(torch.FloatTensor(np.array(mini_batch.done)), (size, -1)).detach()
 
         with torch.no_grad():
             output_next_state_batch = self.target_network(next_state_batch).detach()
