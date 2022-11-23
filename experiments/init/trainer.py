@@ -10,6 +10,13 @@ class Trainer:
         self.name = name
         self.agent = agent
 
+    def prework_state(self ,next_state:dict)->dict:
+
+        next_state = next_state['scans'][0][180:900:24]
+        next_state /= 8
+
+        return next_state
+
     def get_reward(self,done:bool,next_state:dict)->float:
         """
         Add custom reward for learning
@@ -68,11 +75,10 @@ class Trainer:
             while True:
 
                 action = self.agent.inference(state)
-                #self.env.render()
+                self.env.render()
 
                 next_state, reward, done, _ = self.env.step(np.array([[steering[action], 0.5]]))
-                next_state = next_state['scans'][0][180:900:24]
-                next_state /= 8
+                next_state = self.prework_state(next_state=next_state)
 
                 reward = self.get_reward(done=done , next_state=next_state)
 
