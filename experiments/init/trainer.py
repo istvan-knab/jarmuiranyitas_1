@@ -18,8 +18,9 @@ class Trainer:
         for e in range(episodes):
             state, _, _, _ = self.env.reset(np.array([[0, 0, 3.0]]))
             state = state['scans'][0][180:900:24]
-            state /= 8
+            state /= 4.7
             reward_sum = 0
+            current_lap = 0
             time = 0
 
             while True:
@@ -27,9 +28,10 @@ class Trainer:
                 action = self.agent.inference(state)
                 # self.env.render()
 
-                next_state, reward, done, _ = self.env.step(np.array([[steering[action], 0.5]]))
+                next_state, reward, done, _ = self.env.step(np.array([[steering[action], 1.0]]))
+                lap_count = next_state['lap_counts']
                 next_state = next_state['scans'][0][180:900:24]
-                next_state /= 8
+                next_state /= 4.7
 
                 if done:
                     reward = - 1
@@ -61,9 +63,13 @@ class Trainer:
                     delta_y = abs(y_1 - y_2)
                     relative_yaw_angle = np.pi / 2 - np.arctan(delta_y / delta_x)
                     reward1 = np.interp(np.cos(relative_yaw_angle), (0.95, 1.0), (- 0.5, 0.5))
-                    reward2 = np.interp(min_dist, (0.0375, 0.0625), (-0.5, 0.5))
+                    reward2 = np.interp(min_dist, (0.08, 0.1025), (-0.5, 0.5))
 
                     reward = reward1 + reward2
+
+                if lap_count > current_lap_count:
+                    reward += 100
+                    current_lap_count += 1
 
                 reward_sum += reward
                 time += 1
@@ -71,9 +77,8 @@ class Trainer:
                 self.agent.save_experience(state=state, action=action, next_state=next_state, reward=reward, done=done)
                 state = next_state
 
-                if time % 10 == 0:
+                if time % 5 == 0:
                     self.agent.fit()
-                    self.agent.update_networks()
 
                 if done:
                     self.agent.e_greedy.update_epsilon()
