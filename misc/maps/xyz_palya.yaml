@@ -1,5 +1,5 @@
 image: xyz_palya.png
-resolution: 0.005000
+resolution: 0.008000
 origin: [-6.550000, -1.180000, 0.000000]
 negate: 0
 occupied_thresh: 0.45

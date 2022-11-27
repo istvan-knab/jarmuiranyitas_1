@@ -38,8 +38,10 @@ class DQNAgentWithPER(Agent):
         self.loss = 0
 
         nn_initializer = NNInitializer(network_type, network_size, seed)
-        self.action_network = nn_initializer.generate_nn()
-        self.target_network = nn_initializer.generate_nn()
+        # self.action_network = nn_initializer.generate_nn()
+        # self.target_network = nn_initializer.generate_nn()
+        self.action_network = torch.load("../experiments/models/f110_2.pth")
+        self.target_network = torch.load("../experiments/models/f110_2.pth")
         self.update_networks()
 
         self.optimizer = optimizer.Adam(self.action_network.nn_parameters, lr=self.learning_rate)
@@ -76,11 +78,11 @@ class DQNAgentWithPER(Agent):
         sample = self.memory.sample(size)
         mini_batch = self.memory.MEMORY_ITEM(*zip(*sample))
 
-        state_batch = torch.reshape(torch.FloatTensor(mini_batch.state), (size, -1)).detach()
-        action_batch = torch.reshape(torch.LongTensor(mini_batch.action), (size, -1)).detach()
-        next_state_batch = torch.reshape(torch.FloatTensor(mini_batch.next_state), (size, -1)).detach()
-        reward_batch = torch.reshape(torch.FloatTensor(mini_batch.reward), (size, -1)).detach()
-        done_batch = torch.reshape(torch.FloatTensor(mini_batch.done), (size, -1)).detach()
+        state_batch = torch.reshape(torch.FloatTensor(np.array(mini_batch.state)), (size, -1)).detach()
+        action_batch = torch.reshape(torch.LongTensor(np.array(mini_batch.action)), (size, -1)).detach()
+        next_state_batch = torch.reshape(torch.FloatTensor(np.array(mini_batch.next_state)), (size, -1)).detach()
+        reward_batch = torch.reshape(torch.FloatTensor(np.array(mini_batch.reward)), (size, -1)).detach()
+        done_batch = torch.reshape(torch.FloatTensor(np.array(mini_batch.done)), (size, -1)).detach()
 
         with torch.no_grad():
             output_next_state_batch = self.target_network(next_state_batch).detach()
