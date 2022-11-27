@@ -34,7 +34,15 @@ class EnvironmentInitializer:
 
     def _create_env_f110(self, **kwargs):
 
+
         path = os.path.abspath("../misc/maps")
         path = ''.join([path, "/", kwargs["map_name"]])
 
-        self._env = F110Env(seed=kwargs["seed"], map=path, map_ext=kwargs["map_ext"], num_agents=1, timestep=0.01)
+
+        self._env =  F110Env(seed = self._config.seed,
+                              map = self._config.path,
+                              map_ext=self._config.map_ext,
+                              num_agents=self._config.num_agents,
+                              timestep=self._config.time_step)
+
+        #self._env = F110Env(seed=kwargs["seed"], map=path, map_ext=kwargs["map_ext"], num_agents=1, timestep=0.01)
