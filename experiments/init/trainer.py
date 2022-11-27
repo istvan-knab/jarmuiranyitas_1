@@ -20,7 +20,7 @@ class Trainer:
             state = state['scans'][0][180:900:24]
             state /= 4.7
             reward_sum = 0
-            current_lap = 0
+            current_lap_count = 0
             time = 0
 
             while True:
